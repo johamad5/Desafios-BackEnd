@@ -1,0 +1,28 @@
+extends index.pug
+
+block products
+    h2=title
+    - if(exist) {
+    .catalog
+        table
+            tr
+                th Nombre
+                th Precio
+                th Img
+            -
+                let lista =list
+            each item in lista
+                tr
+                    td!=item.title
+                    td!=item.price
+                    td 
+                        img(src!=item.thumbnail)
+            
+        br
+        a.addButton(href='http://localhost:8080/') Agregar m&aacute;s productos al Stock
+    - } else {
+    h2 No hay productos en stock!
+    a.addButton(href='http://localhost:8080/') Agregar un producto
+    - }
+    br
+

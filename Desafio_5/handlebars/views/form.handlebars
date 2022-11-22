@@ -1,0 +1,19 @@
+{{> navbar}}
+<br/>
+
+<h2> {{title}} </h2>
+
+<form action="/products" method="post">
+<label for="title">Nombre</label> <br>
+        <input type="text" id="title" name="title"><br>
+        <label for="price">Precio</label> <br>
+        <input type="text" id="price" name="price"><br>
+        <label for="thumbnail">Foto</label> <br>
+        <input type="url" id="thumbnail" name="thumbnail"><br>
+        <input type="submit" class="addButton" value="Agregar!">
+</form>
+<br/>
+<a class="addButton" href="http://localhost:8080/products">Ver todos los productos</a>
+
+<br/>
+{{> footer}}
