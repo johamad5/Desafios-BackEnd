@@ -4,6 +4,8 @@ const PORT = 8080
 
 const handlebars = require('express-handlebars');
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 // configuración del motor
@@ -53,13 +55,11 @@ app.post('/products', (req, res) => {
 
 app.get('/products', (req, res) => {
  const value = (stock.length >= 1 ? true : false)
-    res.render('products', { title: 'Listado de productos',  list: {stock}, exists: value})
+    res.render('products', { title: 'Listado de productos', list: stock, exists: value})
     })
 
 
 app.listen(PORT, function(error){
-    if(error){
-        console.error('SERVER ERROR')
-    }
+    if(error){ console.error('SERVER ERROR') }
     console.log(`ACTIVE SERVER: http://localhost:${ PORT}`)
 })

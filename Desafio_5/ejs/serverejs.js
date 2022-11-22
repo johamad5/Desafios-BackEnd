@@ -4,6 +4,8 @@ const PORT = 8080
 
 app.set('view engine', 'ejs')
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use('/public', express.static('public'));
 
 let stock = [
@@ -43,6 +45,7 @@ app.get('/products', (req, res) => {
 
 app.post('/products', (req, res) => {
     const dataProduct = req.body
+    console.warn(dataProduct)
     const id = stock.length + 1
     stock.push({ id, ...dataProduct})
     
