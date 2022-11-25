@@ -1,0 +1,7 @@
+Para trabajar elijo el motor de plantillas Ejs dado que ademas de ser el más preferido por la comunidad y por tanto, puede obtener un mayor soporte y actualización, es más seguro que un pryecto no quede disfuncional por falta de soporte. 
+Si bien me resulta un poco desafiante, me llama mucho la atención que posea una sintaxis bastante única y, luego de cierta práctica, fácil de escritura e interpretación. 
+
+Pug me parece muy desordenado y poco estructurado, con etiquetas que solo abren. Se encuentra muy sujeto a que el desarrollador sea ordenado y sepa realizar una buena identación de código para que el mismo no se rompa.
+
+Handlebarse me parecer un muy buen motor de plantillas y estuve pensando en elegirlo. Si bien no posee tanto apoyo de la comunidad, la diferencia con Ejs es mínima.
+De todas formas me parece que posee una sintaxis bastante básica y fácil de aprender.
