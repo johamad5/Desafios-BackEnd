@@ -1,0 +1,33 @@
+[
+    {
+        "id": 1,
+        "timestamp": "31/8/2022 00:43:53",
+        "products": [
+            {
+                "id": 6,
+                "timestamp": "28/8/2022, 21:53:32",
+                "title": "Budín de naranja",
+                "description": "Budin con un exquisito aroma y sabor a naranja. Cubierto con una capa de glasé de limón.",
+                "code": "V01",
+                "thumbnail": "https://firebasestorage.googleapis.com/v0/b/proyectofinal-reactjs-32aed.appspot.com/o/budinNaranja.jpg?alt=media&token=43573676-4856-473e-a02e-e65e3fe83ba8",
+                "price": 190,
+                "stock": 50
+            },
+            {
+                "id": 2,
+                "timestamp": "28/8/2022, 21:53:32",
+                "name": "product name",
+                "description": "product description",
+                "code": "product code",
+                "thumbnail": "www.img-product.com",
+                "price": 100,
+                "stock": 10
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "timestamp": "14/12/2022, 19:47:04",
+        "products": []
+    }
+]

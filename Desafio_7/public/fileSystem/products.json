@@ -1,0 +1,52 @@
+[
+  {
+    "id": 5,
+    "timestamp": "28/8/2022, 21:53:32",
+    "title": "Budín de naranja",
+    "description": "Budin con un exquisito aroma y sabor a naranja. Cubierto con una capa de glasé de limón.",
+    "code": "V01",
+    "thumbnail": "https://firebasestorage.googleapis.com/v0/b/proyectofinal-reactjs-32aed.appspot.com/o/budinNaranja.jpg?alt=media&token=43573676-4856-473e-a02e-e65e3fe83ba8",
+    "price": 190,
+    "stock": 50
+  },
+  {
+    "id": 4,
+    "timestamp": "28/8/2022, 21:53:32",
+    "title": "Torta frutal",
+    "description": "Masa quebrada rellena de crema y decorada con una variedad de frutas.",
+    "code": "T04",
+    "thumbnail": "https://firebasestorage.googleapis.com/v0/b/proyectofinal-reactjs-32aed.appspot.com/o/tortaFrutal.jpg?alt=media&token=ffc9ee0d-89d5-4d89-82a8-ce74f93a25ef",
+    "price": 720,
+    "stock": 50
+  },
+  {
+    "id": 3,
+    "timestamp": "28/8/2022, 21:53:32",
+    "title": "Lemon Pie",
+    "description": "Tarta de limón con una base de masa quebrada y cubierta con merengue.",
+    "code": "T03",
+    "price": 720,
+    "thumbnail": "https://firebasestorage.googleapis.com/v0/b/proyectofinal-reactjs-32aed.appspot.com/o/tortaLemonPie.jpg?alt=media&token=37bd04f8-4968-43e0-b50d-295f63f6e501",
+    "stock": 50
+  },
+  {
+    "id": 2,
+    "timestamp": "28/8/2022, 21:53:32",
+    "title": "Torta Brownie",
+    "description": "Se compone por una base de brownie clásico, cubierto por encima con una capa de dulce de leche y copos de merengue italiano.",
+    "code": "T02",
+    "price": 590,
+    "thumbnail": "https://firebasestorage.googleapis.com/v0/b/proyectofinal-reactjs-32aed.appspot.com/o/tortaBrownie.jpg?alt=media&token=41680a53-7089-40ee-9f42-3cfabd4686c1",
+    "stock": 50
+  },
+  {
+    "id": 1,
+    "timestamp": "28/8/2022, 21:53:32",
+    "title": "Alfajor salchichon",
+    "description": "Dos rebanadas de salchichón de chocolate como tapas, relleno de dulce de leche y bañado en chocolate.",
+    "code": "A02",
+    "price": 45,
+    "thumbnail": "https://firebasestorage.googleapis.com/v0/b/proyectofinal-reactjs-32aed.appspot.com/o/alfajorSalchicon.jpg?alt=media&token=b0e622ff-8718-4c4f-ac84-3979b33f179e",
+    "stock": 50
+  }
+]
