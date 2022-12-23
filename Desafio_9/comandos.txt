@@ -1,0 +1,86 @@
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CONSULTAS REALIZADAS DESAFIO - MongoDB  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+Iniciar el servidor como cliente
+> mongo
+
+Crear y comenzar a usar la base de datos ecommerce
+> use ecommerce
+
+Crear la colección PRODUCTOS con 10 archivos
+> db.productos.insert([{ title: 'Budín de naranja', price: 190, thumbnail: 'https://firebasestorage.googleapis.com/v0/b/proyectofinal-reactjs-32aed.appspot.com/o/budinNaranja.jpg?alt=media&token=43573676-4856-473e-a02e-e65e3fe83ba8' },
+{ title: 'Torta frutal', price: 720, thumbnail: 'https://firebasestorage.googleapis.com/v0/b/proyectofinal-reactjs-32aed.appspot.com/o/tortaFrutal.jpg?alt=media&token=ffc9ee0d-89d5-4d89-82a8-ce74f93a25ef' }, { title: 'Lemon Pie', price: 650, thumbnail: 'https://firebasestorage.googleapis.com/v0/b/proyectofinal-reactjs-32aed.appspot.com/o/tortaLemonPie.jpg?alt=media&token=37bd04f8-4968-43e0-b50d-295f63f6e501' },
+{ title: 'Torta Brownie', price: 590, thumbnail: 'https://firebasestorage.googleapis.com/v0/b/proyectofinal-reactjs-32aed.appspot.com/o/tortaBrownie.jpg?alt=media&token=41680a53-7089-40ee-9f42-3cfabd4686c1' },
+{ title: 'Torta Carrot Cake', price: 1010, thumbnail: 'https://firebasestorage.googleapis.com/v0/b/proyectofinal-reactjs-32aed.appspot.com/o/tortaCarrotCake.jpg?alt=media&token=327e61fd-4d86-4b1c-bd42-3174b438f48e' },
+{ title: 'Alfajores salchichón', price: 270, thumbnail: 'https://firebasestorage.googleapis.com/v0/b/proyectofinal-reactjs-32aed.appspot.com/o/alfajorSalchicon.jpg?alt=media&token=b0e622ff-8718-4c4f-ac84-3979b33f179e' },
+{ title: 'Alfajores de maicena', price: 210, thumbnail: 'https://www.ohmargott.com/content/uploads/2020/05/DSC00628-01-e1588557286234.jpeg' },
+{ title: 'Chessecake de maracuya', price: 1200, thumbnail: 'https://www.maracuya.info/wp-content/uploads/2018/10/cheesecake-maracuya.jpg' },
+{ title: 'Chessecake de oreo', price: 1010, thumbnail: 'https://i.ytimg.com/vi/XS6BzxX2R0Y/maxresdefault.jpg' },
+{ title: 'Chessecake de frutos rojos', price: 3010, thumbnail: 'https://cdn7.kiwilimon.com/recetaimagen/2854/640x426/31646.jpg.webp' }]);
+
+Crear la colección MENSAJES con 10 archivos
+> db.mensajes.insert([{ email: 'johamad@gmail.com', message: 'Hola a todos!', date: '02-09-2022' },
+{ email: 'juan.alberto@gmail.com', message: 'Este es mi primer mensaje', date: '02-09-2022' },
+{ email: 'leo225@gmail.com', message: 'Holaa!', date: '03-09-2022' },
+{ email: 'agus-lila@gmail.com', message: 'Buen día para todos!', date: '02-09-2022' },
+{ email: 'emma5@gmail.com', message: 'No me gusta el maracuya', date: '04-09-2022' },
+{ email: 'carria@gmail.com', message: 'Yo probé el maracuya y no está tan mal', date: '04-09-2022' },
+{ email: 'joselito@gmail.com', message: 'Prefiero el chessecake de frutos rojos', date: '04-09-2022' },
+{ email: 'belkin@gmail.com', message: 'Aguanten las oreos', date: '04-09-2022' },
+{ email: 'lucia-rojas@gmail.com', message: 'Totalmente de acuerdo con Belkin', date: '04-09-2022' },
+{ email: 'emilio03perez@gmail.com', message: 'Hasta luego!', date: '05-09-2022' }]);
+
+Enlistar todos los documentos de cada colección.
+> db.mensajes.find().pretty();
+> db.productos.find().pretty();
+
+Mostrar la cantidad de documentos almacenados en cada colección (2 formas diferentes).
+> db.productos.find().count()
+> db.mensajes.estimatedDocumentCount();
+
+CRUD sobre la colección de PRODUCTOS.
+Crear un producto para la colección
+> db.productos.insertOne({{ title: 'Torta rogel', price: 2010, thumbnail: 'https://luciapaula.com/wp-content/uploads/2021/04/2021-04-18-062903063-820x1024.jpg' }});
+
+Listar los productos con precio menor a 1000 pesos.
+> db.productos.find({"price": {$lt: 1000}}).pretty();
+
+Listar los productos con precio entre los 1000 a 3000 pesos.
+> db.productos.find({$and: [{$or: [{"price": {$lt: 3000}}]}, {$or: [{"price": {$gt: 1000}}]}]}).pretty();
+
+Listar los productos con precio mayor a 3000 pesos.
+> db.productos.find({"price": {$gt: 3000}}).pretty();
+
+Mostrar el nombre del tercer producto más barato.
+> db.productos.find().sort({"price": 1}).skip(2).limit(1);
+
+Agregar el campo stock a todos los productos con un valor de 100.
+> db.productos.update({},{$set: {"stock": 100}}, {multi: true});
+
+Cambiar el campo stock a 0 de los productos que tengan un precio mayores a 4000 pesos.
+*Se agrego un producto extra con precio mayor a 4000 porque no habia ninguno*
+> db.productos.update({"price": {$gte: 4000}},{$set: {"stock": 0}})
+
+Borrar los productos con precio menor a 1000 pesos.
+>db.productos.deleteMany({price: {$lte: 1000}});
+
+Crear un usuario 'pepe' clave: 'asd456' que sólo pueda leer la base de datos ecommerce. 
+>  db.createUser({user: "pepe", pwd: "asd456", roles: [{ role: "read", db: "ecommerce" }]});
+
+Volver a levantar el servidor controlando la autenticación
+> mongod --dbpath C:\Users\usuario\Desktop\DesafioMongoDB --auth
+
+Verificar el usuario con el que estamos operando
+> db.runCommand({connectionStatus : 1})
+
+Ingresar con el usuario que tiene permisos de solo lectura
+> use ecommerce
+> db.auth("pepe", 'asd456')
+
+Realizar un INSERT para corroborar que no tiene los permisos de escritura
+RESULTADO:
+> WriteCommandError({
+        "ok" : 0,
+        "errmsg" : "not authorized on ecommerce to execute command { insert: \"productos\", ordered: true, lsid: { id: UUID(\"f0d710d2-5c5e-4a86-ba9d-8f3ccf3ac0cf\") }, $db: \"ecommerce\" }",
+        "code" : 13,
+        "codeName" : "Unauthorized"
+})
