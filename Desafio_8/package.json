@@ -1,0 +1,22 @@
+{
+  "name": "desafio_8",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.8",
+    "knex": "^2.4.0",
+    "mysql": "^2.18.1",
+    "socket.io": "^4.5.4",
+    "sqlite3": "^5.1.4"
+  }
+}
