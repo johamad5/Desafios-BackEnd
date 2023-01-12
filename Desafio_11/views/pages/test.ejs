@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('../partials/head')%>
+</head>
+<body>
+    <%- include('../partials/navbar')%>
+
+    <h2><%= title %></h2>
+    
+    <h3>Listado de productos</h3>
+    <div >
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Foto</th>
+                </tr>
+            </thead>
+            <tbody id="producsTest">
+    
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <hr>
+   
+   <br/>
+   <%- include('../partials/footer') %>
+
+   <script src="../../public/index.js"></script>
+</body>
+</html>

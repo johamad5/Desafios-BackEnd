@@ -1,0 +1,35 @@
+[
+    {
+        "author": {
+            "id": "johanamadero3@gmail.com",
+            "name": "Johana ",
+            "surname": "Madero",
+            "age": "24",
+            "alias": "jMad",
+            "avatar": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/de11e927-19b0-4705-965f-ff0c68b04b47/dev5m0m-5a7339d0-d11d-4454-8a5d-b01a18123b41.jpg/v1/fill/w_1024,h_1473,q_75,strp/jinx_by_annteya_dev5m0m-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTQ3MyIsInBhdGgiOiJcL2ZcL2RlMTFlOTI3LTE5YjAtNDcwNS05NjVmLWZmMGM2OGIwNGI0N1wvZGV2NW0wbS01YTczMzlkMC1kMTFkLTQ0NTQtOGE1ZC1iMDFhMTgxMjNiNDEuanBnIiwid2lkdGgiOiI8PTEwMjQifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.lbC5gCXjX3lSZ4_lYj55A5d3vb3CyPu3Qlm-A0I93f0"
+        },
+        "text": "Buenas tardes!"
+    },
+    {
+        "author": {
+            "id": "juanAndres@gmail.com",
+            "name": "Juan",
+            "surname": "Andres",
+            "age": "28",
+            "alias": "Jan",
+            "avatar": "https://www.geekmi.news/__export/1621562925698/sites/debate/img/2021/05/20/zorogod1.jpg_375108060.jpg"
+        },
+        "text": "Holaaa!"
+    },
+    {
+        "author": {
+            "id": "ele@gmail.com",
+            "name": "Ele ",
+            "surname": "Ink",
+            "age": "34",
+            "alias": "ele",
+            "avatar": "https://sm.ign.com/t/ign_latam/screenshot/default/dnl_qxar.1280.jpg"
+        },
+        "text": "acertijo "
+    }
+]
