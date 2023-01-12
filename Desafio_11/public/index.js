@@ -57,9 +57,13 @@ socket.on('chat', (normData) => {
 		{},
 		{ idAttribute: 'id' }
 	);
-	const msgSchema = new normalizr.schema.Entity('msg', {
-		author: authorSchema,
-	});
+	const msgSchema = new normalizr.schema.Entity(
+		'msg',
+		{
+			author: authorSchema,
+		},
+		{ idAttribute: 'datatime' }
+	);
 	const messagesSchema = new normalizr.schema.Entity('mensajes', {
 		msg: [msgSchema],
 	});
@@ -111,6 +115,7 @@ function sendMsg() {
 			avatar: document.getElementById('avatar').value,
 		},
 		text: document.getElementById('msg').value,
+		datatime: new Date(),
 	};
 
 	socket.emit('usserMsg', msg);

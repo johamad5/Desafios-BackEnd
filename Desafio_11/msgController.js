@@ -18,7 +18,11 @@ class MsgContenedor {
 		};
 
 		this.authorSchema = new schema.Entity('author', {}, { idAttribute: 'id' });
-		this.msgSchema = new schema.Entity('msg', { author: this.authorSchema });
+		this.msgSchema = new schema.Entity(
+			'msg',
+			{ author: this.authorSchema },
+			{ idAttribute: 'datatime' }
+		);
 		this.messagesSchema = new schema.Entity('msgs', {
 			msg: [this.msgSchema],
 		});

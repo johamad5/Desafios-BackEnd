@@ -38,6 +38,7 @@ import { getProducts } from './API/apiProductMock.js';
 
 //Manejador de msg
 import { MsgContenedor } from './msgController.js';
+import { Console } from 'console';
 const msgC = new MsgContenedor('msg');
 
 //Rutas
@@ -63,6 +64,7 @@ io.on('connection', async (socket) => {
 
 	let products = await productsDB.getAll();
 	let msgs = await msgC.getAllnormMsgs();
+	console.log(msgs);
 	let prodsRandom = getProducts(5);
 
 	io.sockets.emit('chat', msgs);
