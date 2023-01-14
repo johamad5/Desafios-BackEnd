@@ -1,33 +1,8 @@
 import fs from 'fs';
-import { normalize, schema } from 'normalizr';
-import util from 'util';
-
-function print(obj) {
-	console.log(util.inspect(obj, false, 12, true));
-}
 
 class MsgContenedor {
 	constructor(fileName) {
 		this.fileName = `./${fileName}.json`;
-	}
-
-	#normAll(msgs) {
-		this.arrayToNorm = {
-			id: 'Desafio_11',
-			msg: msgs,
-		};
-
-		this.authorSchema = new schema.Entity('author', {}, { idAttribute: 'id' });
-		this.msgSchema = new schema.Entity(
-			'msg',
-			{ author: this.authorSchema },
-			{ idAttribute: 'datatime' }
-		);
-		this.messagesSchema = new schema.Entity('msgs', {
-			msg: [this.msgSchema],
-		});
-
-		return normalize(this.arrayToNorm, this.messagesSchema);
 	}
 
 	async save(msg) {
@@ -61,7 +36,7 @@ class MsgContenedor {
 			let array = await fs.promises.readFile(`${this.fileName}`, 'utf-8');
 			let arrayJSON = JSON.parse(array);
 
-			return this.#normAll(arrayJSON);
+			return arrayJSON;
 		} catch (error) {
 			console.log(`ERROR: No se pudo obtener la data normalizada`);
 			console.log(error);

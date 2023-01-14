@@ -3,6 +3,8 @@ import express from 'express';
 const app = express();
 const PORT = 8080;
 
+import { normalize, schema } from 'normalizr';
+
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -35,10 +37,14 @@ app.set('view engine', 'ejs');
 
 // API products
 import { getProducts } from './API/apiProductMock.js';
+import util from 'util';
+
+function print(obj) {
+	console.log(util.inspect(obj, false, 12, true));
+}
 
 //Manejador de msg
 import { MsgContenedor } from './msgController.js';
-import { Console } from 'console';
 const msgC = new MsgContenedor('msg');
 
 //Rutas
@@ -54,7 +60,6 @@ app.get('/api/productos-test', async (req, res) => {
 	});
 });
 
-//
 io.on('connection', async (socket) => {
 	// Creo las bases de datos si no existen al iniciar el servidor
 	(async () => {
@@ -66,7 +71,25 @@ io.on('connection', async (socket) => {
 	let prodsRandom = getProducts(5);
 	let msgs = await msgC.getAllnormMsgs();
 
-	io.sockets.emit('chat', msgs);
+	const mensajes = {
+		id: 'Desafio_11',
+		msg: msgs,
+	};
+
+	const authorSchema = new schema.Entity('author', {}, { idAttribute: 'id' });
+	const msgSchema = new schema.Entity(
+		'msg',
+		{ author: authorSchema },
+		{ idAttribute: 'datatime' }
+	);
+	const messagesSchema = new schema.Entity('mensajes', {
+		msg: [msgSchema],
+	});
+
+	const messagesNorm = normalize(mensajes, messagesSchema);
+	print(messagesNorm);
+
+	io.sockets.emit('chat', messagesNorm);
 	io.sockets.emit('producsList', products);
 	io.sockets.emit('producsRandom', prodsRandom);
 

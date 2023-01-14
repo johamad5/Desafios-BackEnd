@@ -14,13 +14,8 @@ const messagesSchema = new normalizr.schema.Entity('mensajes', {
 	msg: [msgSchema],
 });
 
-socket.on('connection', () => {
-	console.log('Its alive');
-});
-
 socket.on('producsRandom', (data) => {
 	let productsRandomsArea = document.getElementById('producsTest');
-	productsRandomsArea.innerHTML = ``;
 
 	data.map((prod) => {
 		let { title, price, thumbnail } = prod;
@@ -65,9 +60,8 @@ function saveProduct() {
 	return false;
 }
 
-socket.on('chat', (normData) => {
-	console.log(`DATA NORMAL`);
-	console.log(normData);
+socket.on('chat', (normD) => {
+	let normData = normD;
 
 	const dataDesnor = normalizr.denormalize(
 		normData.result,
@@ -75,14 +69,11 @@ socket.on('chat', (normData) => {
 		normData.entities
 	);
 
-	console.log(`data desnorm:`);
-	console.log(dataDesnor);
-
 	const chatView = document.getElementById('chat');
 	chatView.innerHTML = ``;
 
-	if (denormData.msg.length >= 1) {
-		denormData.msg.map((msg) => {
+	if (dataDesnor.msg.length >= 1) {
+		dataDesnor.msg.map((msg) => {
 			let text = msg.text;
 			let alias = msg.author.alias;
 			let url = msg.author.avatar;
@@ -99,10 +90,10 @@ socket.on('chat', (normData) => {
 
 	const compRatio = document.getElementById('compressionRatio');
 
-	const percentageNormData = JSON.stringify(data).length;
-	const percentageDenormData = JSON.stringify(denormData).length;
-	const valueCompRatio =
-		100 - (percentageNormData * 100) / percentageDenormData;
+	const valueCompRatio = (
+		100 -
+		(JSON.stringify(normData).length * 100) / JSON.stringify(dataDesnor).length
+	).toFixed(2);
 
 	compRatio.innerHTML = `El porcentaje de compresión es de ${valueCompRatio}`;
 });
