@@ -63,9 +63,8 @@ io.on('connection', async (socket) => {
 	})();
 
 	let products = await productsDB.getAll();
-	let msgs = await msgC.getAllnormMsgs();
-	console.log(msgs);
 	let prodsRandom = getProducts(5);
+	let msgs = await msgC.getAllnormMsgs();
 
 	io.sockets.emit('chat', msgs);
 	io.sockets.emit('producsList', products);

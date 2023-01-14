@@ -1,5 +1,19 @@
 const socket = io();
 
+const authorSchema = new normalizr.schema.Entity(
+	'author',
+	{},
+	{ idAttribute: 'id' }
+);
+const msgSchema = new normalizr.schema.Entity(
+	'msg',
+	{ author: authorSchema },
+	{ idAttribute: 'datatime' }
+);
+const messagesSchema = new normalizr.schema.Entity('mensajes', {
+	msg: [msgSchema],
+});
+
 socket.on('connection', () => {
 	console.log('Its alive');
 });
@@ -52,28 +66,17 @@ function saveProduct() {
 }
 
 socket.on('chat', (normData) => {
-	const authorSchema = new normalizr.schema.Entity(
-		'author',
-		{},
-		{ idAttribute: 'id' }
-	);
-	const msgSchema = new normalizr.schema.Entity(
-		'msg',
-		{
-			author: authorSchema,
-		},
-		{ idAttribute: 'datatime' }
-	);
-	const messagesSchema = new normalizr.schema.Entity('mensajes', {
-		msg: [msgSchema],
-	});
+	console.log(`DATA NORMAL`);
+	console.log(normData);
 
-	const denormData = normalizr.denormalize(
+	const dataDesnor = normalizr.denormalize(
 		normData.result,
 		messagesSchema,
 		normData.entities
 	);
-	console.log(denormData);
+
+	console.log(`data desnorm:`);
+	console.log(dataDesnor);
 
 	const chatView = document.getElementById('chat');
 	chatView.innerHTML = ``;
