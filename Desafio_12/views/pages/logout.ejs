@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('../partials/head')%>
+</head>
+<body>
+    <%- include('../partials/navbar')%>
+
+    <h2>LOGOUT</h2>
+    <br>
+    <div class="colorBox welcomeBox">
+        <h1 class="welcomeMsg">Hasta luego 
+            <%= username %>
+        </h1>
+    </div>
+
+    <br>
+   
+   <br/>
+   <%- include('../partials/footer') %>
+
+   <script src="../../public/index.js"></script>
+   <script>
+    function redireccionarPagina() {
+  window.location = "http://localhost:8080/login";
+}
+setTimeout("redireccionarPagina()", 2000);
+   </script>
+</body>
+</html>

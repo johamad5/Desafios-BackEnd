@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('../partials/head')%>
+</head>
+<body>
+    <%- include('../partials/navbar')%>
+<div class="colorBox welcomeBox">
+    <h1 class="welcomeMsg">Bienvenido/a 
+        <%= username %>
+    </h1>
+    <form action="/logout" method="get">
+<button>Logout</button></form>
+</div>
+
+    <h2><%= title %></h2>
+
+    <h4>AGREGAR PRODUCTO AL STOCK:</h4>
+    <%- include('../partials/productForm') %>
+    <br>
+    <hr>
+    <br>
+    
+    <h3>Listado de productos</h3>
+    <div >
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Foto</th>
+                </tr>
+            </thead>
+            <tbody id="producCard">
+    
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <hr>
+    <br>
+    <h3>Centro de mensajes</h3>
+    <p id="compressionRatio"></p>
+    <%- include('../partials/messageForm') %>
+    <div id="chat"></div>
+
+   <br/>
+   <%- include('../partials/footer') %>
+
+   <script src="../../public/index.js"></script>
+
+
+</body>
+</html>
+
