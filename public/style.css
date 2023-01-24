@@ -1,0 +1,122 @@
+body{
+  font-family:'Arial Narrow', Arial, sans-serif;
+}
+
+.footer,
+.header {
+  font-family: 'Lucida Console', 'Courier New', monospace;
+  background-color: #3a3a3a;
+  padding: 25px;
+  text-align: center;
+  color: whitesmoke;
+}
+
+.header li a {
+  text-decoration: none;
+  color: azure;
+  margin-left: 10px;
+}
+
+.header li a:hover {
+  background-color: whitesmoke;
+  color: #3a3a3a;
+}
+
+h2, h3 {
+  font-family: 'Lucida Console', 'Courier New', monospace;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+form {
+  text-align: center;
+}
+
+form input {
+  margin: 2px 20px;
+}
+
+.addButton,
+button {
+  background-color: #3a3a3a;
+  padding: 5px 10px;
+  color: whitesmoke;
+  margin: 10px;
+  border: 1px solid transparent;
+}
+
+.addButton:hover,
+button:hover {
+  background-color: transparent;
+  color: #3a3a3a;
+  border: 1px solid #3a3a3a;
+}
+
+table{
+  text-align: center;
+  width: 80%;
+  margin: auto auto;
+}
+
+table th{
+  background: linear-gradient(#3a3a3a, #999595);
+  padding: 10px;
+  color: whitesmoke;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.blackBox{
+  max-width: 60%;
+  padding: 5px 10px;
+  background-color: #d6d1d1;
+  margin: auto;
+  text-align: center;
+  color: #3a3a3a;
+}
+
+.colorBox{
+
+  font-family: 'Lucida Console', 'Courier New', monospace;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 60%;
+  padding: 30px 60px;
+  background-color: rgba(0, 128, 0, 0.274)
+  ;
+  margin: auto;
+  text-align: center;
+  color: green;
+}
+
+table tr{
+  background-color: #d6d1d1;
+}
+
+hr{
+  max-width: 80%;
+  margin: auto;
+}
+
+.msg{
+  display: flex;
+  padding: 10px 25px;
+  max-width: 60%;
+  margin: 5px auto;
+  border-radius: 15px;
+  background: linear-gradient(to left top, #ffffff, #e9e7e7);
+}
+
+td .producTest{
+  max-width: 150px;
+}
+
+.imgChat{
+  max-width: 40px;
+  margin-right: 20px;
+}
+
+.oneMsg{
+  display: flex;
+}
