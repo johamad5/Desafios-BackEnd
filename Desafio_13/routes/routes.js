@@ -1,9 +1,11 @@
 import { Router } from "express";
-import passport from "passport";
-import { authRequired } from "../middleware/auth.js";
-
 const router = Router();
 
+// Middleware
+import { authRequired } from "../middleware/auth.js";
+
+// Passport
+import passport from "passport";
 import {
   localSignupStategy,
   localLoginStrategy,

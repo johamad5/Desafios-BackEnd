@@ -17,13 +17,9 @@ import { Server } from "socket.io";
 const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: { origin: "*" } });
 
-// ---> Bases de datos
-import { Controller } from "./dbController.js";
-import { optionsMariaDB } from "./options/oMariaDB.js";
-const productsDB = new Controller(optionsMariaDB, "stock");
-
-// ---> Products con MariaDB
-import { createProductsTable } from "./databaseCreator.js";
+// ---> Stock con MongoDB Atlas
+import { Controller } from "./controllers/productsController.js";
+const productsDB = new Controller();
 
 // ---> Session con MongoDB Atlas
 import MongoStore from "connect-mongo";
@@ -63,7 +59,7 @@ app.set("view engine", "ejs");
 import { getProducts } from "./API/apiProductMock.js";
 
 // ---> Manejador de msg
-import { MsgContenedor } from "./msgController.js";
+import { MsgContenedor } from "./controllers/msgController.js";
 const msgC = new MsgContenedor("msg");
 
 // ---> NUEVAS rutas
@@ -71,16 +67,11 @@ import { router } from "./routes/routes.js";
 app.use("/", router);
 
 // ---> MongoDB conection
-import { DBconect } from "./database.js";
+import { DBconect } from "./database/mongoDBconnection.js";
 DBconect();
 
 // ---> Websocket
 io.on("connection", async (socket) => {
-  // Creo las bases de datos si no existen al iniciar el servidor
-  (async () => {
-    await createProductsTable();
-  })();
-
   let products = await productsDB.getAll();
   let prodsRandom = getProducts(5);
   let msgs = await msgC.getAllnormMsgs();
