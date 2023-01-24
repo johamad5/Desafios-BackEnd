@@ -10,12 +10,13 @@ import {
   localSignupStategy,
   localLoginStrategy,
 } from "../passport/localAuth.js";
+
 passport.use("/signup", localSignupStategy);
 passport.use("/login", localLoginStrategy);
 
 // Homepage
 router.get("/home", authRequired, (req, res) => {
-  const username = req.session?.username;
+  const username = req.session.passport.user;
   res.render("pages/home.ejs", { title: "Listado", username });
 });
 
@@ -40,8 +41,7 @@ router.get("/loginError", (req, res) => {
 
 // Logout
 router.get("/logout", (req, res) => {
-  // const username = req.session.username;
-
+  const username = req.session.passport.user;
   req.session.destroy((err) => {
     if (err) {
       return res.send({ status: "Logout ERROR", body: err });

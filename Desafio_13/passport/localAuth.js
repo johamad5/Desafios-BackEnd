@@ -61,10 +61,10 @@ export const localLoginStrategy = new LocalStrategy(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user.email);
 });
 
-passport.deserializeUser(async (id, done) => {
-  const user = await userModels.findById(id);
+passport.deserializeUser(async (email, done) => {
+  const user = await userModels.findOne({ email: email });
   done(null, user);
 });
