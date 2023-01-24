@@ -1,5 +1,5 @@
 body{
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family:'Arial Narrow', Arial, sans-serif;
 }
 
 .footer,
@@ -68,7 +68,7 @@ table th{
 
 .blackBox{
   max-width: 60%;
-  padding: 30px 60px;
+  padding: 5px 10px;
   background-color: #d6d1d1;
   margin: auto;
   text-align: center;

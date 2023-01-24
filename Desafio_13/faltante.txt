@@ -1,0 +1,6 @@
+// MEJORAS
+
+- Pasar productos de MariaDB a MongoDB
+- Pasar mensajes de fileSystem a MongoDB
+- Dividir las rutas en una carpeta aparte
+- Poner websocket en una carpeta aparte

@@ -44,7 +44,7 @@ socket.on('producsList', (data) => {
     `;
 		});
 	} else {
-		productList.innerHTML = `<p class='blackBox'> No tenemos productos disponibles por el momento </p>`;
+		productCatalog.innerHTML = `<p class='blackBox'> No tenemos productos disponibles por el momento </p>`;
 	}
 });
 

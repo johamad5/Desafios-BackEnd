@@ -1,26 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
+  <head>
     <%- include('../partials/head')%>
-</head>
-<body>
+  </head>
+  <body>
     <%- include('../partials/navbar')%>
 
     <h2>USER LOGIN</h2>
-    <hr>
-    <br>
-    <form action="/" method="post">
-        <input name="username" id="username" type="text" placeholder="Ingrese su usuario">
-        <input name="password" id="password" type="text" placeholder="Ingrese su contraseña">
-        <button>Login</button>
-        <button>Sign up</button>
+    <hr />
+    <br />
+    <form action="/login" method="post">
+      <input
+        name="email"
+        id="email"
+        type="text"
+        placeholder="Ingrese su correo"
+      />
+      <input
+        name="password"
+        id="password"
+        type="text"
+        placeholder="Ingrese su contraseña"
+      />
+      <button>Log in</button>
     </form>
+    <br />
+    <br />
+    <div class="blackBox">
+      <span>No tienes cuenta? Create una aquí: </span>
+      <button onclick="location.href='/signup'">Sign up</button>
+    </div>
 
-    <br>
-   
-   <br/>
-   <%- include('../partials/footer') %>
+    <br />
 
-   <script src="../../public/index.js"></script>
-</body>
+    <br />
+    <%- include('../partials/footer') %>
+
+    <script src="../../public/index.js"></script>
+  </body>
 </html>

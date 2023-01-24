@@ -1,252 +1,124 @@
-import express from 'express';
-export const app = express();
-
+// ---> Servidor Express basico
+import express from "express";
+const app = express();
 const PORT = 8080;
 
-// Server websocket
-import { createServer } from 'http';
-import { Server } from 'socket.io';
+import { normalize, schema } from "normalizr";
 
-const httpServer = createServer(app);
-const io = new Server(httpServer, { cors: { origin: '*' } });
-export { io };
-
-// Middleware
-import { auth } from './Middleware/auth.js';
-import { isValidPassword } from './Middleware/validPassword.js';
-
-// Passport local
-import passport from 'passport';
-import { Strategy as LocalStrategy } from 'passport-local';
-
-import path from 'path';
-import { fileURLToPath } from 'url';
-
+import path from "path";
+import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Session con mongo Atlas
-import MongoStore from 'connect-mongo';
-import session from 'express-session';
+// ---> Implementacion
+import { createServer } from "http";
+import { Server } from "socket.io";
 
-const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+const httpServer = createServer(app);
+const io = new Server(httpServer, { cors: { origin: "*" } });
 
-//////////////////////////
-// 		Passport 		//
-//////////////////////////
-passport.use(
-	'login',
-	new LocalStrategy((username, password, done) => {
-		user.findOne({ username }, (err, user) => {
-			if (err) return done(err);
+// ---> Bases de datos
+import { Controller } from "./dbController.js";
+import { optionsMariaDB } from "./options/oMariaDB.js";
+const productsDB = new Controller(optionsMariaDB, "stock");
 
-			if (!user) {
-				console.log('User Not Found with username ' + username);
-				return done(null, false);
-			}
+// ---> Products con MariaDB
+import { createProductsTable } from "./databaseCreator.js";
 
-			if (!isValidPassword(user, password)) {
-				console.log('Invalid Password');
-				return done(null, false);
-			}
-
-			return done(null, user);
-		});
-	})
-);
-
-function createHash(password) {
-	return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
-}
-
-passport.use(
-	'signUp',
-	new LocalStrategy(
-		{ passReqToCallback: true },
-		(req, username, password, done) => {
-			User.findOne({ username: username }, function (err, user) {
-				if (err) {
-					console.log('Error in SignUp: ' + err);
-					return done(err);
-				}
-
-				if (user) {
-					console.log('User already exists');
-					return done(null, false);
-				}
-
-				const newUser = {
-					username,
-					password: createHash(password),
-				};
-				User.create(newUser, (err, userWithId) => {
-					if (err) {
-						console.log('Error in Saving user: ' + err);
-						return done(err);
-					}
-					console.log(user);
-					console.log('User Registration succesful');
-					return done(null, userWithId);
-				});
-			});
-		}
-	)
-);
-
-passport.serializeUser((user, done) => {
-	done(null, user.username);
-});
-
-passport.deserializeUser((username, done) => {
-	user.findById(username, done);
-});
+// ---> Session con MongoDB Atlas
+import MongoStore from "connect-mongo";
+import session from "express-session";
+import { mongodb } from "./keys.js";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/public', express.static(__dirname + '/public'));
+app.use("/public", express.static(__dirname + "/public"));
 app.use(
-	session({
-		store: MongoStore.create({
-			mongoUrl:
-				'mongodb+srv://jMad:Desafio12@desafio.flqrhzt.mongodb.net/?retryWrites=true&w=majority',
-			mongoOptions: advancedOptions,
-		}),
-		secret: 'palabraEncriptadora',
-		cookie: {
-			httpOnly: false,
-			secure: false,
-			maxAge: 60000,
-		},
-		rolling: true,
-		resave: true,
-		saveUninitialized: false,
-	})
+  session({
+    store: MongoStore.create({
+      mongoUrl: mongodb.URI,
+      mongoOptions: mongodb.advanceOptions,
+    }),
+    secret: "palabraEncriptadora",
+    cookie: {
+      httpOnly: false,
+      secure: false,
+      maxAge: 6000000,
+    },
+    rolling: true,
+    resave: false,
+    saveUninitialized: false,
+  })
 );
+
+// ---> Pasport
+import passport from "passport";
 app.use(passport.initialize());
 app.use(passport.session());
 
-/// RUTAS PASSPORT
-import {
-	getRoot,
-	getLogin,
-	getFailsignup,
-	getSignup,
-	getLogout,
-	failRoute,
-	postSignup,
-	postLogin,
-} from './routes/routesPassport.js';
+// ---> Configuracion del motor de plantillas
+app.set("view engine", "ejs");
 
-// index
-app.get('/', getRoot);
+// ---> API products
+import { getProducts } from "./API/apiProductMock.js";
 
-// login
-app.get('/login', getLogin);
-app.post(
-	'/login',
-	passport.authenticate('login', { failureRedirect: '/faillogin' }),
-	postLogin
-);
-app.get('/faillogin', getFailsignup);
+// ---> Manejador de msg
+import { MsgContenedor } from "./msgController.js";
+const msgC = new MsgContenedor("msg");
 
-// SIGNUP
-app.get('/signup', getSignup);
-app.post(
-	'/signup',
-	passport.authenticate('signup', { failureRedirect: '/failsignup' }),
-	postSignup
-);
-app.get('/failsignup', getFailsignup);
+// ---> NUEVAS rutas
+import { router } from "./routes/routes.js";
+app.use("/", router);
 
-// logout
-app.get('/logout', getLogout);
+// ---> MongoDB conection
+import { DBconect } from "./database.js";
+DBconect();
 
-// file route
-app.get('*', failRoute);
+// ---> Websocket
+io.on("connection", async (socket) => {
+  // Creo las bases de datos si no existen al iniciar el servidor
+  (async () => {
+    await createProductsTable();
+  })();
 
-//Configuracion del motor de plantillas
-app.set('view engine', 'ejs');
+  let products = await productsDB.getAll();
+  let prodsRandom = getProducts(5);
+  let msgs = await msgC.getAllnormMsgs();
 
-import { normalize, schema } from 'normalizr';
+  const mensajes = {
+    id: "Desafio_11",
+    msg: msgs,
+  };
 
-// Función para crear tabla Stock
-import { createProductsTable } from './databaseCreator.js';
+  const authorSchema = new schema.Entity("author", {}, { idAttribute: "id" });
+  const msgSchema = new schema.Entity(
+    "msg",
+    { author: authorSchema },
+    { idAttribute: "datatime" }
+  );
+  const messagesSchema = new schema.Entity("mensajes", {
+    msg: [msgSchema],
+  });
 
-// Bases de datos
-import { Controller } from './dbController.js';
-import { optionsMariaDB } from './options/oMariaDB.js';
+  const messagesNorm = normalize(mensajes, messagesSchema);
 
-// Manejador de acciones sobre productos
-const productsC = new Controller(optionsMariaDB, 'stock');
+  io.sockets.emit("chat", messagesNorm);
+  io.sockets.emit("producsList", products);
+  io.sockets.emit("producsRandom", prodsRandom);
 
-// Manejador de acciones sobre mensajes
-import { MsgContenedor } from './msgController.js';
-const msgC = new MsgContenedor('msg');
+  socket.on("productData", async (data) => {
+    await productsDB.save(data);
+    let newProductList = await productsDB.getAll();
+    io.sockets.emit("productList", newProductList);
+  });
 
-/*Manejador de acciones sobre Rutas y rutas
-
-import {
-	saveUserSession,
-	showMainPage,
-	showLogin,
-	logoutUser,
-} from './routes/routes.js';
-
-// Rutas
-// Log-in
-app.get('/login', auth, showLogin);
-
-// Home
-app.post('/', saveUserSession);
-app.get('/', auth, showMainPage);
-
-// Logout
-app.get('/logout', logoutUser);*/
-
-io.on('connection', async (socket) => {
-	// Creo las bases de datos si no existen al iniciar el servidor
-	(async () => {
-		await createProductsTable();
-	})();
-
-	let products = await productsC.getAll();
-	let productsR = products.reverse();
-	let msgs = await msgC.getAllnormMsgs();
-
-	const mensajes = {
-		id: 'Desafio_11',
-		msg: msgs,
-	};
-
-	const authorSchema = new schema.Entity('author', {}, { idAttribute: 'id' });
-	const msgSchema = new schema.Entity(
-		'msg',
-		{ author: authorSchema },
-		{ idAttribute: 'datatime' }
-	);
-	const messagesSchema = new schema.Entity('mensajes', {
-		msg: [msgSchema],
-	});
-
-	const messagesNorm = normalize(mensajes, messagesSchema);
-
-	io.sockets.emit('chat', messagesNorm);
-	io.sockets.emit('producsList', productsR);
-
-	socket.on('productData', async (data) => {
-		await productsDB.save(data);
-		let newProductList = await productsDB.getAll();
-		let newProductListR = newProductList.reverse();
-		io.sockets.emit('productList', newProductListR);
-	});
-
-	socket.on('usserMsg', async (data) => {
-		await msgC.save(data);
-		let newChat = await msgC.getAllnormMsgs();
-		io.sockets.emit('chat', newChat);
-	});
+  socket.on("usserMsg", async (data) => {
+    await msgC.save(data);
+    let newChat = await msgC.getAllnormMsgs();
+    io.sockets.emit("chat", newChat);
+  });
 });
 
 httpServer.listen(PORT, () => {
-	console.log(`SERVER ON - http://localhost:${PORT}`);
+  console.log(`SERVER ON - http://localhost:${PORT}`);
 });
