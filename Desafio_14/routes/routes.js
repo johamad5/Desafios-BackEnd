@@ -71,6 +71,28 @@ router.get('/api/productos-test', async (req, res) => {
 	});
 });
 
+router.get('/info', (req, res) => {
+	const Argumentos = process.argv.slice(2);
+	const Plataforma = process.platform;
+	const Version = process.version;
+	const Memoria = process.memoryUsage().rss;
+	const Path = process.execPath;
+	const Id = process.pid;
+	const Carpeta = process.cwd();
+
+	const datos = {
+		Argumentos: Argumentos,
+		Pltataforma: `Sistema operativo ( SO ) - ${Plataforma}`,
+		Version: `Version de Node.js utilizada - ${Version}`,
+		Memoria: `Memoria total reservada ( RSS ) - ${Memoria}`,
+		Path: `Path de ejecución - ${Path}`,
+		Id: `Process ID - ${Id}`,
+		Carpeta: `Carpeta del proyecto - ${Carpeta}`,
+	};
+
+	res.json(datos);
+});
+
 router.get('*', (req, res) => {
 	res.status(404).send('ERROR: Ruta no existente');
 });
