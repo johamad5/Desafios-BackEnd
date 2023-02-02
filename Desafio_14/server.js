@@ -97,13 +97,32 @@ io.on('connection', async (socket) => {
 	socket.on('productData', async (data) => {
 		await productsDB.save(data);
 		let newProductList = await productsDB.getAll();
-		io.sockets.emit('productList', newProductList);
+
+		io.sockets.emit('producsList', newProductList);
 	});
 
 	socket.on('usserMsg', async (data) => {
 		await msgC.save(data);
-		let newChat = await msgC.getAllnormMsgs();
-		io.sockets.emit('chat', newChat);
+
+		let msgs = await msgC.getAllnormMsgs();
+
+		const mensajes = {
+			id: 'Desafio_11',
+			msg: msgs,
+		};
+
+		const authorSchema = new schema.Entity('author', {}, { idAttribute: 'id' });
+		const msgSchema = new schema.Entity(
+			'msg',
+			{ author: authorSchema },
+			{ idAttribute: 'datatime' }
+		);
+		const messagesSchema = new schema.Entity('mensajes', {
+			msg: [msgSchema],
+		});
+
+		const messagesNorm = normalize(mensajes, messagesSchema);
+		io.sockets.emit('chat', messagesNorm);
 	});
 });
 

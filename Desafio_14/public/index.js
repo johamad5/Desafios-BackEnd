@@ -31,6 +31,7 @@ socket.on('producsRandom', (data) => {
 
 socket.on('producsList', (data) => {
 	let productCatalog = document.getElementById('producCard');
+	productCatalog.innerHTML = ``;
 
 	if (data.length >= 1) {
 		data.map((prod) => {
@@ -60,15 +61,14 @@ function saveProduct() {
 }
 
 socket.on('chat', (normD) => {
-	let normData = normD;
-
 	const dataDesnor = normalizr.denormalize(
-		normData.result,
+		normD.result,
 		messagesSchema,
-		normData.entities
+		normD.entities
 	);
 
 	const chatView = document.getElementById('chat');
+	chatView.innerHTML = ``;
 
 	if (dataDesnor.msg.length >= 1) {
 		dataDesnor.msg.map((msg) => {
@@ -90,7 +90,7 @@ socket.on('chat', (normD) => {
 
 	const valueCompRatio = (
 		100 -
-		(JSON.stringify(normData).length * 100) / JSON.stringify(dataDesnor).length
+		(JSON.stringify(normD).length * 100) / JSON.stringify(dataDesnor).length
 	).toFixed(2);
 
 	compRatio.innerHTML = `<p class='blackBox'>El porcentaje de compresión es de ${valueCompRatio} % <p/>`;

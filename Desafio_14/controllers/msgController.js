@@ -8,7 +8,7 @@ export class MsgContenedor {
 	async save(msg) {
 		try {
 			let arrayJSON = await this.getAll();
-			arrayJSON.unshift({ ...msg });
+			arrayJSON.unshift(msg);
 			await fs.promises.writeFile(this.fileName, JSON.stringify(arrayJSON));
 
 			console.log(`SUCCESS: El mensaje se agregó correctamente al archivo`);
