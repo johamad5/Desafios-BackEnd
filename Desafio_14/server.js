@@ -6,7 +6,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import passport from 'passport';
 import { router } from './routes/routes.js';
-import { apiRadom } from './routes/apiRandom.js';
+import apiRadom from './routes/apiRandom.js';
 import { normalize, schema } from 'normalizr';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -62,8 +62,8 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/', router);
 app.use('/apirandom', apiRadom);
+app.use('/', router);
 
 app.set('view engine', 'ejs');
 
