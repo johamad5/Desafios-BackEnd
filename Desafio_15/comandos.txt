@@ -1,1 +1,51 @@
-DETALLAR TODAS LAS ACCIONES Y COMANDOS /
+> Inicio del servidor en el puerto 8080 y en modo FORK
+    node server.js -P 8080 -m fork
+
+
+> Inicio del servidor en el puerto 8080 y en modo CLUSTER
+    node server.js -p 8080 -m cluster
+
+
+> Inicio del servidor con FOREVER
+    forever start server.js -p 8080 -m cluster
+
+
+> Detener servidor iniciado con FOREVER
+    forever stop <PID>
+
+
+> Inicio de servidor con PM2 en modo FORK
+    pm2 start server.js --name="serverMode-FORK" --watch -- 8080
+
+    Inicio de servidor con PM2 en modo FORK y un puerto diferente al 8080
+    pm2 start server.js --name="serverMode-FORK" --watch -- --port 8082
+
+> Inicio de servidor con PM2 en modo CLUSTER
+    pm2 start server.js --name="serverMode-CLUSTER" --watch -i max -- 8080
+
+    Listar los procesos activos con PM2
+    pm2 listen
+
+    Finalizar un proceso especifico con PM2
+    pm2 delete <app_name | namespace | id >
+
+    Finalizar TODOS los proceso con PM2
+    pm2 delete getAll
+
+> NGINX parte 1:    
+    Redirigir todas las consultas a /apirandoms a un cluster de servidores escuchando en el puerto 8081. 
+    El cluster será creado desde node utilizando el módulo nativo cluster.
+    El resto de las consultas, redirigirlas a un servidor individual escuchando en el puerto 8080.
+
+    forever start server.js -p 8081 -m CLUSTER
+    forever start server.js -p 8080 -m FORK
+    NginxConfig: ./config/nginx1.conf
+
+> NGINX parte 1:   
+    Modificar la configuración para que todas las consultas a /apirandoms sean redirigidas a un cluster de servidores gestionado desde nginx, repartiéndolas equitativamente entre 4 instancias escuchando en los puertos 8082, 8083, 8084 y 8085 respectivamente.
+
+    forever start server.js -p 8085 -m FORK
+    forever start server.js -p 8084 -m FORK
+    forever start server.js -p 8083 -m FORK
+    forever start server.js -p 8082 -m FORK
+    NginxConfig: ./config/nginx2.conf

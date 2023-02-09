@@ -8,9 +8,7 @@ mongoose.set('useFindAndModify', false);
 export function DBconect() {
 	mongoose
 		.connect(URImongo, advanceOptions)
-		.then((db) => {
-			console.log('Connected to the database ');
-		})
+		.then((db) => {})
 		.catch((err) => {
 			console.error(`Error connecting to the database. ${err}`);
 		});

@@ -33,7 +33,6 @@ const config = {
 };
 
 const { mode, port, _ } = parseArgs(process.argv.slice(2), config);
-console.log({ otros: _, port, mode: mode.toUpperCase() });
 
 if (mode.toUpperCase() !== 'FORK' && mode.toUpperCase() !== 'CLUSTER') {
 	throw Error(`The ${mode.toUpperCase()} mode is an invalid working mode.`);
@@ -99,7 +98,6 @@ function runServer() {
 		let products = await productsDB.getAll();
 		let prodsRandom = getProducts(5);
 		let msgs = await msgC.getAllnormMsgs();
-		console.log(`Using websocket`);
 
 		const mensajes = {
 			id: 'Desafio_11',
