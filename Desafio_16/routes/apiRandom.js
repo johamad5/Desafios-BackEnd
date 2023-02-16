@@ -1,22 +1,29 @@
 import { Router } from 'express';
-import { fork } from 'child_process';
-import path from 'path';
-
+import { logger } from '../logs/loger.js';
 const apiRadom = Router();
 
 apiRadom.get('/', (req, res) => {
 	const { url, method } = req;
-	const cant = req.query.cant || 800000000;
-	const calculo = fork(path.resolve(process.cwd(), './middleware/calculo.js'));
-
+	const cantidad = Number(req.query.cant) || 300000;
 	logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
-	calculo.on('message', (result) => {
-		if (result == 'listo') {
-			calculo.send(cant);
-		} else {
-			res.json(result);
+
+	function calculoFork(cantidad) {
+		const nums = [];
+		for (let index = 0; index < cantidad; index++) {
+			nums[index] = Math.floor(Math.random() * 1000) + 1;
 		}
-	});
+		let objNumeros = nums.reduce((randomCount, currentValue) => {
+			return (
+				randomCount[currentValue]
+					? ++randomCount[currentValue]
+					: (randomCount[currentValue] = 1),
+				randomCount
+			);
+		}, {});
+		return objNumeros;
+	}
+
+	res.send(calculoFork(cantidad));
 });
 
 export default apiRadom;
