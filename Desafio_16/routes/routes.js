@@ -129,9 +129,10 @@ router.get('/info', (req, res) => {
 		Carpeta: `Carpeta del proyecto - ${Carpeta}`,
 	};
 
+	console.log('Aqui van los datos');
 	console.log(datos);
 
-	res.json(datos);
+	res.send(datos);
 });
 
 router.get('*', (req, res) => {
