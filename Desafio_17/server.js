@@ -61,7 +61,7 @@ function runServer() {
 	const __filename = fileURLToPath(import.meta.url);
 	const __dirname = path.dirname(__filename);
 	const app = express();
-	const PORT = process.argv[3] || config.default.port;
+	const PORT = process.env.PORT || 8080;
 	const httpServer = createServer(app);
 	const io = new Server(httpServer, { cors: { origin: '*' } });
 	const productsDB = new Controller();

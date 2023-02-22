@@ -7,7 +7,6 @@ import {
 } from '../passport/localAuth.js';
 import os from 'os';
 import { logger } from '../logs/loger.js';
-import compression from 'compression';
 
 const router = Router();
 
@@ -74,7 +73,7 @@ router.get('/signup', (req, res) => {
 	const { url, method } = req;
 	logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
 
-	res.render('pages/signup.ejs');
+	res.render('pages/signUp.ejs');
 });
 
 router.post(
