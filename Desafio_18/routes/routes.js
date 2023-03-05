@@ -1,155 +1,163 @@
-import { Router } from "express";
-import { authRequired } from "../middleware/auth.js";
-import passport from "passport";
+import { Router } from 'express';
+import { authRequired } from '../middleware/auth.js';
+import passport from 'passport';
 import {
-  localSignupStategy,
-  localLoginStrategy,
-} from "../passport/localAuth.js";
-import os from "os";
-import { logger } from "../logs/loger.js";
-import { UserController } from "../controllers/usersController.js";
+	localSignupStategy,
+	localLoginStrategy,
+} from '../passport/localAuth.js';
+import os from 'os';
+import { logger } from '../logs/loger.js';
+import { UserController } from '../controllers/usersController.js';
+import multer from 'multer';
 
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, 'public/uploads');
+	},
+	filename: function (req, file, cb) {
+		cb(null, `${req.body.email}.jpg`);
+	},
+});
+const upload = multer({ storage: storage });
 const router = Router();
 const userDB = new UserController();
 
-passport.use("/signup", localSignupStategy);
-passport.use("/login", localLoginStrategy);
+passport.use('/signup', localSignupStategy);
+passport.use('/login', localLoginStrategy);
 
-router.get("/", (req, res) => {
-  const { url, method } = req;
-  logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
+router.get('/', (req, res) => {
+	const { url, method } = req;
+	logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
 
-  res.redirect(`/login`);
+	res.redirect(`/login`);
 });
 
-router.get("/home", authRequired, (req, res) => {
-  const { url, method } = req;
-  logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
+router.get('/home', authRequired, (req, res) => {
+	const { url, method } = req;
+	logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
 
-  res.render("pages/home.ejs", { title: "Listado" });
+	res.render('pages/home.ejs', { title: 'Pre Entrega 3' });
 });
 
-router.get("/login", authRequired, (req, res) => {
-  const { url, method } = req;
-  logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
+router.get('/allProducts', authRequired, (req, res) => {
+	const { url, method } = req;
+	logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
 
-  res.redirect(`/home`);
+	res.render('pages/productSection.ejs', { title: 'Agregar al stock' });
 });
 
-router.post(
-  "/login",
-  passport.authenticate(localLoginStrategy, {
-    successRedirect: "/home",
-    failureRedirect: "/loginError",
-    passReqToCallback: true,
-  }),
-  (req, res) => {
-    const { url, method } = req;
-    logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
-  }
-);
+router.get('/login', authRequired, (req, res) => {
+	const { url, method } = req;
+	logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}}`);
 
-router.get("/loginError", (req, res) => {
-  const { url, method } = req;
-  logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
-
-  res.render("pages/loginError.ejs");
-});
-
-router.get("/logout", (req, res) => {
-  const { url, method } = req;
-  logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
-
-  const username = req.session.passport.user;
-  req.session.destroy((err) => {
-    if (err) {
-      return res.send({ status: "Logout ERROR", body: err });
-    } else {
-      res.render("pages/logout.ejs", { username });
-    }
-  });
-});
-
-router.get("/signup", (req, res) => {
-  const { url, method } = req;
-  logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
-
-  res.render("pages/signUp.ejs");
+	res.redirect(`/home`);
 });
 
 router.post(
-  "/signup",
-  passport.authenticate(localSignupStategy, {
-    successRedirect: "/home",
-    failureRedirect: "/signupError",
-    passReqToCallback: true,
-  }),
-  (req, res) => {
-    const { url, method } = req;
-    logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
-  }
+	'/login',
+	passport.authenticate(localLoginStrategy, {
+		successRedirect: '/home',
+		failureRedirect: '/loginError',
+		passReqToCallback: true,
+	}),
+	(req, res) => {
+		const { url, method } = req;
+		logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
+	}
 );
 
-router.get("/signupError", (req, res) => {
-  const { url, method } = req;
-  logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
+router.get('/loginError', (req, res) => {
+	const { url, method } = req;
+	logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
 
-  res.render("pages/signupError.ejs");
+	res.render('pages/loginError.ejs');
 });
 
-router.get("/api/productos-test", async (req, res) => {
-  const { url, method } = req;
-  logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
+router.get('/logout', (req, res) => {
+	const { url, method } = req;
+	logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
 
-  res.render(`pages/test.ejs`, {
-    title: "Listado random",
-  });
+	req.session.destroy((err) => {
+		if (err) {
+			return res.send({ status: 'Logout ERROR', body: err });
+		} else {
+			res.render('pages/logout.ejs');
+		}
+	});
 });
 
-router.get("/userData", async (req, res) => {
-  const { url, method } = req;
-  const userEmail = req.session.passport.user;
-  let userData = await userDB.getOne(userEmail);
+router.get('/signup', (req, res) => {
+	const { url, method } = req;
+	logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
 
-  logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
-
-  res.render("pages/userData.ejs", { userData });
-});
-router.get("/info", (req, res) => {
-  const { url, method } = req;
-  logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
-  const Argumentos = process.argv.slice(2);
-  const Plataforma = process.platform;
-  const Version = process.version;
-  const Memoria = process.memoryUsage().rss;
-  const Path = process.execPath;
-  const Id = process.pid;
-  const Carpeta = process.cwd();
-  const numCPUs = os.cpus().length;
-
-  const datos = {
-    Argumentos: Argumentos,
-    Pltataforma: `Sistema operativo ( SO ) - ${Plataforma}`,
-    Version: `Version de Node.js utilizada - ${Version}`,
-    Memoria: `Memoria total reservada ( RSS ) - ${Memoria}`,
-    Path: `Path de ejecución - ${Path}`,
-    CPUs: `Cantidad de procesadores presentes en el servidor - ${numCPUs}`,
-    Id: `Process ID - ${Id}`,
-    Carpeta: `Carpeta del proyecto - ${Carpeta}`,
-  };
-
-  console.log("Aqui van los datos");
-  console.log(datos);
-
-  res.send(datos);
+	res.render('pages/signUp.ejs');
 });
 
-router.get("*", (req, res) => {
-  const { url, method } = req;
-  logger.warn();
-  `Petición recibida por el servidor. Ruta ${method} - ${url} inexistente`;
+router.post(
+	'/signup',
+	upload.single('avatar'),
+	passport.authenticate(localSignupStategy, {
+		successRedirect: '/home',
+		failureRedirect: '/signupError',
+		passReqToCallback: true,
+	}),
+	(req, res) => {
+		const { url, method } = req;
+		logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
+	}
+);
 
-  res.status(404).send("ERROR: Ruta no existente");
+router.get('/signupError', (req, res) => {
+	const { url, method } = req;
+	logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
+
+	res.render('pages/signupError.ejs');
+});
+
+router.get('/userData', async (req, res) => {
+	const { url, method } = req;
+	const userEmail = req.session.passport.user;
+	let userData = await userDB.getOne(userEmail);
+
+	logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
+
+	res.render('pages/userData.ejs', { userData });
+});
+router.get('/info', (req, res) => {
+	const { url, method } = req;
+	logger.info(`Petición recibida por el servidor. Ruta ${method} - ${url}`);
+	const Argumentos = process.argv.slice(2);
+	const Plataforma = process.platform;
+	const Version = process.version;
+	const Memoria = process.memoryUsage().rss;
+	const Path = process.execPath;
+	const Id = process.pid;
+	const Carpeta = process.cwd();
+	const numCPUs = os.cpus().length;
+
+	const datos = {
+		Argumentos: Argumentos,
+		Pltataforma: `Sistema operativo ( SO ) - ${Plataforma}`,
+		Version: `Version de Node.js utilizada - ${Version}`,
+		Memoria: `Memoria total reservada ( RSS ) - ${Memoria}`,
+		Path: `Path de ejecución - ${Path}`,
+		CPUs: `Cantidad de procesadores presentes en el servidor - ${numCPUs}`,
+		Id: `Process ID - ${Id}`,
+		Carpeta: `Carpeta del proyecto - ${Carpeta}`,
+	};
+
+	console.log('Aqui van los datos');
+	console.log(datos);
+
+	res.send(datos);
+});
+
+router.get('*', (req, res) => {
+	const { url, method } = req;
+	logger.warn();
+	`Petición recibida por el servidor. Ruta ${method} - ${url} inexistente`;
+
+	res.status(404).send('ERROR: Ruta no existente');
 });
 
 export { router };

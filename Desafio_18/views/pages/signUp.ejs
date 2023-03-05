@@ -10,7 +10,7 @@
     <hr />
     <br />
     <div class="registerArea">
-      <form action="/signup" method="post" class="formOption">
+      <form action="/signup" method="post" class="formOption" enctype="multipart/form-data">
         <div>
           <label for="email">Email</label>
           <input
@@ -58,18 +58,12 @@
 
         <div>
           <label for="">Foto</label>
-          <label for="avatar" class="uploadFile">Seleccionar avatar</label>
-          <input name="avatar" id="avatar" type="file" />
+          <label for="avatar" class="uploadFile" >Seleccionar avatar</label>
+          <input name="avatar" accept=".png,.jpg, .pdf" id="avatar" type="file" />
         </div>
 
         <br />
         <button>Sign up</button>
-        <!-- <input
-          onclick="return saveData()"
-          type="submit"
-          class="addButton"
-          value="Sign up"
-        /> -->
       </form>
 
       <div class="loginOption">

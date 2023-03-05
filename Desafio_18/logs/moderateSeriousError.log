@@ -1,1 +1,10 @@
-[]
+{
+  message: 'Este es un mensaje warn de prueba',
+  level: 'warn',
+  timestamp: '2023-03-05T05:01:02.527Z'
+}
+{
+  message: 'Este es un mensaje error de prueba',
+  level: 'error',
+  timestamp: '2023-03-05T05:01:02.534Z'
+}
