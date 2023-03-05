@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head')%>
+  </head>
+  <body>
+    <%- include('../partials/navbar')%>
+
+    <h2>USER DATA</h2>
+    <hr />
+    <br />
+    <div class="userInfoArea">
+      <div class="userData">
+        <table>
+          <tr>
+            <th>CORREO</th>
+            <td><%= userData.email %></td>
+          </tr>
+          <tr>
+            <th>NOMBRE</th>
+            <td><%= userData.name %></td>
+          </tr>
+          <tr>
+            <th>DIRECCIÓN</th>
+            <td><%= userData.adress %></td>
+          </tr>
+          <tr>
+            <th>EDAD</th>
+            <td><%= userData.age %></td>
+          </tr>
+          <tr>
+            <th>TELEFONO</th>
+            <td><%= userData.phone %></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="userImg">
+        <img src="../../public/img/R.png" />
+      </div>
+    </div>
+    <br />
+    <hr />
+    <br />
+    <br />
+
+    <br />
+    <%- include('../partials/footer') %>
+
+    <script src="../../public/index.js"></script>
+  </body>
+</html>

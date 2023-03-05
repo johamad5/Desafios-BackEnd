@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head')%>
+  </head>
+  <body>
+    <br /><br />
+
+    <h2>USER REGISTER</h2>
+    <hr />
+    <br />
+    <div class="registerArea">
+      <form action="/signup" method="post" class="formOption">
+        <div>
+          <label for="email">Email</label>
+          <input
+            name="email"
+            id="email"
+            type="text"
+            placeholder="miCorreo@dominio.com"
+          />
+        </div>
+
+        <div>
+          <label for="password">Contraseña</label>
+          <input
+            name="password"
+            id="password"
+            type="password"
+            placeholder="pws1234"
+          />
+        </div>
+
+        <div>
+          <label for="name">Nombre</label>
+          <input name="name" id="name" type="text" placeholder="Juan Alberto" />
+        </div>
+
+        <div>
+          <label for="adress">Dirección</label>
+          <input
+            name="adress"
+            id="adress"
+            type="text"
+            placeholder="Mi Casita 123"
+          />
+        </div>
+
+        <div>
+          <label for="age">Edad</label>
+          <input name="age" id="age" type="number" placeholder="25" />
+        </div>
+
+        <div>
+          <label for="phone">Telefono</label>
+          <input name="phone" id="phone" type="tel" placeholder="099 123 456" />
+        </div>
+
+        <div>
+          <label for="">Foto</label>
+          <label for="avatar" class="uploadFile">Seleccionar avatar</label>
+          <input name="avatar" id="avatar" type="file" />
+        </div>
+
+        <br />
+        <button>Sign up</button>
+        <!-- <input
+          onclick="return saveData()"
+          type="submit"
+          class="addButton"
+          value="Sign up"
+        /> -->
+      </form>
+
+      <div class="loginOption">
+        <span>Ya tienes cuenta? Ingresa aquí: </span>
+        <button onclick="location.href='/login'">Login</button>
+      </div>
+    </div>
+    <br />
+    <hr />
+    <br />
+    <br />
+
+    <br />
+    <%- include('../partials/footer') %>
+
+    <script src="../../public/index.js"></script>
+  </body>
+</html>
