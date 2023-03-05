@@ -1,0 +1,16 @@
+<form id="filterForm">
+    <label for="minPrice">Precio minimo</label>
+    <input type="number" id="minPriceFilter" name="minPrice">
+    <label for="maxPrice">Precio maximo</label>
+    <input type="number" id="maxPriceFilter" name="maxPrice">
+    <label for="title">Categoria</label>
+    <select name="category" id="categoryFilter">
+        <option value="" disabled selected>---</option>
+        <option value="Indumentaria">Indumentaria</option>
+        <option value="Cascos">Cascos</option>
+        <option value="Almacenamiento">Almacenamiento</option>
+    </select>
+    <br><br>
+    <input onclick='return filterProducts()' type="submit" class="addButton" value="Filtrar">
+    <input onclick='return getAllProducts()' type="submit" class="addButton" value="Quitar filtros">
+</form>

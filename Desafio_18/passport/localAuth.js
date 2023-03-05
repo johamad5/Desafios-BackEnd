@@ -21,11 +21,16 @@ export const localSignupStategy = new LocalStrategy(
 	},
 	async (req, email, password, done) => {
 		const user = await userModels.findOne({ email: email });
-		const { name, adress, age, phone } = req.body;
+		const { name, adress, age, phone, code } = req.body;
 
 		if (user) {
 			return done(null, false);
 		} else {
+			let admin = false;
+			if (code === 'DBK.JM') {
+				admin = true;
+			}
+
 			const newUser = new userModels();
 			newUser.name = name;
 			newUser.email = email;
@@ -34,6 +39,7 @@ export const localSignupStategy = new LocalStrategy(
 			newUser.age = age;
 			newUser.phone = phone;
 			newUser.avatar = `./public/uploads/${email}.jpg`;
+			newUser.admin = admin;
 
 			await newUser.save();
 			logger.info('Usuario registrado con exito');

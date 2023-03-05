@@ -1,9 +1,19 @@
 <form id="productForm">
     <label for="title">Nombre</label>
     <input type="text" id="title" name="title" required>
+    <label for="title">Categoria</label>
+    <select name="category" id="category" required>
+        <option value="" disabled selected>---</option>
+        <option value="Indumentaria">Indumentaria</option>
+        <option value="Cascos">Cascos</option>
+        <option value="Almacenamiento">Almacenamiento</option>
+    </select>
     <label for="price">Precio</label>
     <input type="text" id="price" name="price" required>
+    <br><br>
+    <label for="price">stock</label>
+    <input type="text" id="stock" name="stock" required>
     <label for="thumbnail">Foto</label> 
-    <input type="url" id="thumbnail" name="thumbnail" required><br>
+    <input type="url" id="thumbnail" name="thumbnail" required><br> <br>
     <input onclick='return saveProduct()' type="submit" class="addButton" value="Agregar!">
 </form>

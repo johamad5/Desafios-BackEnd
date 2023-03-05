@@ -129,6 +129,16 @@ function runServer() {
 			io.sockets.emit('producsList', newProductList);
 		});
 
+		socket.on('filterProducts', async (data) => {
+			if (data === 'allProducts') {
+				let productList = await productsDB.getAll();
+				io.sockets.emit('producsList', productList);
+			} else {
+				let newProductList = await productsDB.filter(data);
+				io.sockets.emit('producsList', newProductList);
+			}
+		});
+
 		socket.on('usserAvatar', async (data) => {
 			await userDataC.save(data);
 		});

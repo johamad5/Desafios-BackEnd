@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
 	age: { type: Number, required: true },
 	phone: { type: Number, required: true },
 	avatar: { type: String, required: true },
+	admin: { type: Boolean },
 });
 
 export const userModels = mongoose.model('users', userSchema);
