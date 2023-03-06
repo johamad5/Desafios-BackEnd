@@ -10,6 +10,11 @@ export class Controller {
 		return data;
 	}
 
+	async getForId(productId) {
+		const data = await productModels.findOne({ productId });
+		return data;
+	}
+
 	async filter(object) {
 		let newProductList = [];
 

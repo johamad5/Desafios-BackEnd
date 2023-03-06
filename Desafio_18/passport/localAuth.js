@@ -3,6 +3,11 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { userModels } from '../models/user.js';
 import bCrypt from 'bcrypt';
 import { logger } from '../logs/loger.js';
+import { UserController } from '../controllers/usersController.js';
+import { CartController } from '../controllers/cartController.js';
+
+const cartDB = new CartController();
+const userDB = new UserController();
 
 function isValidPassword(user, password) {
 	return bCrypt.compareSync(password, user.password);
@@ -31,6 +36,8 @@ export const localSignupStategy = new LocalStrategy(
 				admin = true;
 			}
 
+			const cartIdent = await cartDB.create(email);
+
 			const newUser = new userModels();
 			newUser.name = name;
 			newUser.email = email;
@@ -40,9 +47,12 @@ export const localSignupStategy = new LocalStrategy(
 			newUser.phone = phone;
 			newUser.avatar = `./public/uploads/${email}.jpg`;
 			newUser.admin = admin;
+			newUser.cartId = cartIdent;
 
 			await newUser.save();
 			logger.info('Usuario registrado con exito');
+			await cartDB.associateCart(email, newUser._id);
+			logger.info('Carrito asociado al usuario');
 			done(null, newUser);
 		}
 	}

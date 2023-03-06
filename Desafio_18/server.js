@@ -6,7 +6,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import passport from 'passport';
 import { router } from './routes/routes.js';
-import { cRoutes } from './routes/cartRoutes.js';
+import { cartRoutes } from './routes/cartRoutes.js';
 import { normalize, schema } from 'normalizr';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -91,7 +91,7 @@ function runServer() {
 
 	app.use(passport.initialize());
 	app.use(passport.session());
-	app.use('/cart', cRoutes);
+	app.use('/cart', cartRoutes);
 	app.use('/', router);
 
 	app.set('view engine', 'ejs');

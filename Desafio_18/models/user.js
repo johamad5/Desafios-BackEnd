@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
 	phone: { type: Number, required: true },
 	avatar: { type: String, required: true },
 	admin: { type: Boolean },
+	cartId: { type: String },
 });
 
 export const userModels = mongoose.model('users', userSchema);

@@ -35,11 +35,13 @@ socket.on('producsList', (data) => {
 
 	if (data.length >= 1) {
 		data.map((prod) => {
-			let { title, price, thumbnail } = prod;
+			let { productId, title, stock, price, thumbnail } = prod;
 			productCatalog.innerHTML += `
         <tr class='producCard'>
+		<td>${productId}</td>
           <td>${title}</td>
           <td>$ ${price}</td>
+          <td>${stock}</td>
           <td><img class='productImage' src='${thumbnail}' /></td>
         </tr>
     `;
