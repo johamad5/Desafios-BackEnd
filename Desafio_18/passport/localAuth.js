@@ -45,18 +45,15 @@ export const localSignupStategy = new LocalStrategy(
 			from: 'Servidor',
 			to: 'johanamadero3@gmail.com',
 			subject: 'Nuevo registro de Usuario.',
-			html: `<h2> Se Ha Registrado Un Nuevo Usuario en el sistema. <br/></h2>
+			html: `<h2> Se registró un nuevo usuario en el sistema. <br/></h2>
 			<h3>Datos del nuevo usuario: <h3/> <br/>
 			<p>
 			- Nombre: ${name} <br/>
 			- Dirección: ${adress}<br/> 
 			- Edad: ${age}<br/> 
-			- Telefono: ${phone}
+			- Telefono: ${phone}<br/>
 			- AdminRole: ${admin} </p>`,
 		};
-
-		console.log('mailOptions');
-		console.log(mailOptions);
 
 		if (user) {
 			return done(null, false);
@@ -80,7 +77,6 @@ export const localSignupStategy = new LocalStrategy(
 
 			try {
 				const data = await transporter.sendMail(mailOptions);
-				console.log(data);
 			} catch (e) {
 				logger.error(e);
 			}
