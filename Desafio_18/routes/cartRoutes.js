@@ -31,6 +31,6 @@ cartRoutes.get('/add/:producId/:cant', authRequired, async (req, res) => {
 	res.send(value);
 });
 
-cartRoutes.get('/checkout'.authRequired, (req, res) => {});
+//cartRoutes.get('/checkout'.authRequired, (req, res) => {});
 
 export { cartRoutes };
