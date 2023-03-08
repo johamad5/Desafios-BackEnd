@@ -4,12 +4,19 @@ import { authRequired } from '../middleware/auth.js';
 import { CartController } from '../controllers/cartController.js';
 import { UserController } from '../controllers/usersController.js';
 import { createTransport } from 'nodemailer';
+import twilio from 'twilio';
 import { USER, PASS } from '../config/envConfig.js';
+import {
+	AUTH_TOKEN,
+	ACCOUNT_SID,
+	TWILIO_PHONE,
+	TWILIO_WSPP,
+} from '../config/envConfig.js';
 //import twilio from 'twilio';
 
-//const accountSid = 'xxxxxxxxxxxxxxxx';
-//const authToken = 'xxxxxxxxxxxxxxxxx';
-//const client = twilio(accountSid, authToken);
+const accountSid = ACCOUNT_SID;
+const authToken = AUTH_TOKEN;
+const client = twilio(accountSid, authToken);
 const userDB = new UserController();
 const cartDB = new CartController();
 const cartRoutes = Router();
@@ -83,21 +90,33 @@ ${productList}
 
 	try {
 		const data = await transporter.sendMail(mailOptions);
-		console.log(data);
 	} catch (e) {
 		logger.error(e);
 	}
 
-	/*try {
-		const message = await client.messages.create({
-			body: 'Hola soy un SMS desde Node.js!',
-			from: '+14156884237',
-			to: '+541199998888',
+	try {
+		const options = await client.messages.create({
+			body: 'Hola soy un WSP desde Node.js!',
+			mediaUrl: ['https://demo.twilio.com/owl.png'],
+			from: `whatsapp:${TWILIO_WSPP}`,
+			to: 'whatsapp:+58999499709',
 		});
-		console.log(message);
+
+		console.log(options);
 	} catch (e) {
 		logger.error(e);
-	}*/
+	}
+
+	try {
+		const message = await client.messages.create({
+			body: 'Hemos recibido tu pedido y el mismo ya se encuentra en proceso!',
+			from: TWILIO_PHONE,
+			to: '+59899499709', // client phone
+		});
+	} catch (e) {
+		logger.error(e);
+	}
+
 	res.send('Pedido realizado con exito');
 });
 
