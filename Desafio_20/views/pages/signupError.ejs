@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head')%>
+  </head>
+  <body>
+    <%- include('../partials/navbar')%>
+
+    <h2>SIGNUP ERROR</h2>
+
+    <div class="blackBox">
+      <span>Ya existe un usuario con el correo ingresado.</span>
+      <button onclick="location.href='/login'">Log In</button>
+    </div>
+
+    <br />
+
+    <br />
+    <%- include('../partials/footer') %>
+
+    <script src="../../public/index.js"></script>
+  </body>
+</html>
