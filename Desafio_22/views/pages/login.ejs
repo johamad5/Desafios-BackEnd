@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head')%>
+  </head>
+  <body>
+    <%- include('../partials/navbar')%>
+
+    <h2>USER LOGIN</h2>
+    <hr />
+    <br />
+    <form action="/login" method="post">
+      <input
+        name="email"
+        id="email"
+        type="text"
+        placeholder="Ingrese su correo"
+      />
+      <input
+        name="password"
+        id="password"
+        type="password"
+        placeholder="Ingrese su contraseña"
+      />
+      <button>Log in</button>
+    </form>
+    <br />
+    <br />
+    <div class="blackBox">
+      <span>No tienes cuenta? Create una aquí: </span>
+      <button onclick="location.href='/signup'">Sign up</button>
+    </div>
+
+    <br />
+
+    <br />
+    <%- include('../partials/footer') %>
+
+    <script src="../../public/index.js"></script>
+  </body>
+</html>

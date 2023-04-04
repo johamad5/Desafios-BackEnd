@@ -1,0 +1,36 @@
+// Consultar todos los productos
+query {
+  getProducts {
+    productId,
+    title,
+    price,
+    thumbnail
+  }
+}
+
+query {
+  getProducts {
+    title
+  }
+}
+
+// Consultar por un producto según su ID 
+query { 
+  getOneProduct(id: "2") {
+    productId,
+    title,
+    price,
+    thumbnail
+  }
+}
+
+
+// Crear un producto
+mutation {
+  createProduct(datos: {title: "Product graphQL3", price: 24, thumbnail: "productPhoto3.com"}) {
+    productId
+    title
+    price
+    thumbnail
+  }
+}
