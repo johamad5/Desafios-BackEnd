@@ -65,7 +65,6 @@ function sendMsg() {
 		text: document.getElementById('msg').value,
 		datatime: new Date(),
 	};
-
 	socket.emit('usserMsg', msg);
 	return false;
 }
