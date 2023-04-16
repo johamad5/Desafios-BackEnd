@@ -24,10 +24,9 @@ export const renderLoginError = async (ctx) => {
 
 export const logout = async (ctx) => {
 	logger.info(`Petición recibida por el servidor. GET - /logout`);
-	const username = ctx.session.passport?.user || 'Alberto';
+	const username = ctx.session.passport?.user;
 	if (ctx.isAuthenticated()) {
 		ctx.logout();
-		ctx.session.passport = null;
 	}
 
 	await ctx.render('pages/logout', { username });
@@ -35,9 +34,6 @@ export const logout = async (ctx) => {
 
 export const loginPost = async (ctx) => {
 	logger.info(`Petición recibida por el servidor. POST - /login`);
-	const userDetails = ctx.request.body;
-	const userId = await user.login(userDetails);
 	ctx.session.authenticated = true;
-	ctx.session.id = userId;
 	ctx.redirect('/');
 };
